@@ -1,4 +1,24 @@
-div {
-    width: 80%;
+#more-charts {
+    float: right;
+    width: 50%;
     margin: auto auto 50px;
+}
+
+#charts {
+    width: 80%;
+    margin: auto auto;
+}
+
+#picture-from-space-div{
+    float: right;
+}
+
+img {
+    width: 242px;
+    height: 242px;
+}
+
+body {
+    width: 90%;
+    margin: auto;
 }

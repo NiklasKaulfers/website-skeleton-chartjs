@@ -4,6 +4,7 @@ async function generateChart({
     borderColor,
     backgroundColor,
     animationIndex,
+    title,
     type
                               }){
 
@@ -21,6 +22,7 @@ async function generateChart({
         borderColor,
         backgroundColor,
         animationIndex,
+        title,
         type
     }
     await createChart(csvFilename,divElement, options);
@@ -110,7 +112,7 @@ async function createChart(file,divElement, options) {
         data: {
             labels: parsedData.labels,
             datasets: [{
-                label: file.split('/').pop(), // Get filename
+                label: options.title ?? file.split('/').pop(), // Get filename
                 data: parsedData.values,
                 borderColor: options.borderColor ?? 'rgba(75, 192, 192, 1)',
                 backgroundColor: options.backgroundColor ?? 'rgba(75, 192, 192, 0.2)',
