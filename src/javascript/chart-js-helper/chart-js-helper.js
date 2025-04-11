@@ -2,39 +2,66 @@ async function generateChart({
     csvFilename,
     borderColor,
     backgroundColor,
-    animationIndex
-
+    animationIndex,
+    type
                               }){
-    let animationOptions = [{
+
+    const options = {
+        borderColor,
+        backgroundColor,
+        animationIndex,
+        type
+    }
+    await createChart(csvFilename, options);
+}
+
+function getAnimation(index) {
+    const delayBetweenPoints = 10;
+    const previousY = (ctx) => ctx.index === 0 ? ctx.chart.scales.y.getPixelForValue(100) : ctx.chart.getDatasetMeta(ctx.datasetIndex).data[ctx.index - 1].getProps(['y'], true).y;
+    const options = [{
         // empty for if no animation is wished
-    },{
+    }, {
         tension: 1000,
         easing: 'linear',
         from: 1,
         to: 0,
         loop: true
         ,
-    },{
-        type: 'number',
-        easing: 'linear',
-        duration: 10
-
+    }, {
+        x: {
+            type: 'number',
+            easing: 'linear',
+            duration: delayBetweenPoints,
+            from: NaN, // the point is initially skipped
+            delay(ctx) {
+                if (ctx.type !== 'data' || ctx.xStarted) {
+                    return 0;
+                }
+                ctx.xStarted = true;
+                return ctx.index * delayBetweenPoints;
+            }
+        },
+        y: {
+            type: 'number',
+            easing: 'linear',
+            duration: delayBetweenPoints,
+            from: previousY,
+            delay(ctx) {
+                if (ctx.type !== 'data' || ctx.yStarted) {
+                    return 0;
+                }
+                ctx.yStarted = true;
+                return ctx.index * delayBetweenPoints;
+            }
+        }
     }
     ];
-    if (animationIndex >= animationOptions.length) {
-        console.error("Faulty animation index detected, will continue with no animation")
-        animationIndex = 0;
+    if (index >= options.length) {
+        console.error(`Faulty animation index detected of ${index}, will continue with no animation`)
+        index = 0;
     }
-    const animation = animationOptions[animationIndex] ?? animationOptions[0];
-
-    const options = {
-        borderColor,
-        backgroundColor,
-        animation
-    }
-    await createChart(csvFilename, options);
+    return options[index] ?? options[0]
 }
-
 
 
 
@@ -65,7 +92,7 @@ async function createChart(file, options) {
     document.getElementById('charts').appendChild(ctx);
 
     new Chart(ctx, {
-        type: 'line',
+        type: options.type ?? 'line',
         data: {
             labels: parsedData.labels,
             datasets: [{
@@ -77,7 +104,7 @@ async function createChart(file, options) {
             }]
         },
         options: {
-            animations: options.animation,
+            animations: getAnimation(options.animationIndex),
             responsive: true,
             scales: {
                 x: {
@@ -101,16 +128,16 @@ async function createChart(file, options) {
 
 
 
-generateChart({
-    csvFilename: "/data/calliopemini-data-2025-03-17T12-05-48-003Z.csv",
-    borderColor: "#FF0000",
-    animationIndex: 1
-})
+// generateChart({
+//     csvFilename: "/data/calliopemini-data-2025-03-17T12-05-48-003Z.csv",
+//     borderColor: "#FF0000",
+//     animationIndex: 1
+// })
 generateChart({
     csvFilename: "/data/calliopemini-data-2025-03-17T12-29-16-698Z.csv",
-    animationIndex: 3
+    animationIndex: 2
 })
-generateChart({
-    csvFilename: "/data/calliopemini-data-2025-03-19T09-49-18-231Z.csv"
-})
+// generateChart({
+//     csvFilename: "/data/calliopemini-data-2025-03-19T09-49-18-231Z.csv"
+// })
 export default generateChart;

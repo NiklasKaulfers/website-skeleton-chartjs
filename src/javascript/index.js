@@ -1,4 +1,4 @@
-import generateChart from "./helpers/chart-js-helper";
+import generateChart from "./chart-js-helper/chart-js-helper";
 
 
 // todo: make import usable
