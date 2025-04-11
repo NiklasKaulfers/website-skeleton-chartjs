@@ -1,4 +1,4 @@
-import generateChart from "./chart-js-helper/chart-js-helper";
+import generateChart from "./chart-js-helper/chart-js-helper.js";
 
 
 // todo: make import usable
@@ -6,13 +6,13 @@ import generateChart from "./chart-js-helper/chart-js-helper";
 
 
 async function loadCharts() {
-    await generateChart({
+    generateChart({
         csvFilename: "/data/calliopemini-data-2025-03-17T12-05-48-003Z.csv",
         divElement: document.getElementById("charts"),
         borderColor: "#FF0000",
         animationIndex: 1
     })
-    await generateChart({
+    generateChart({
         csvFilename: "/data/calliopemini-data-2025-03-17T12-29-16-698Z.csv",
         divElement: document.getElementById("more-charts"),
         borderColor: "#f55000",
