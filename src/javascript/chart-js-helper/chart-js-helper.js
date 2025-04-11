@@ -1,10 +1,21 @@
 async function generateChart({
-    csvFilename,
+    csvFilename,    // required
+    divElement,          // required
     borderColor,
     backgroundColor,
     animationIndex,
     type
                               }){
+
+    if (!csvFilename){
+        console.error("csvFilename is missing");
+        throw new Error("csvFilename is missing");
+    }
+
+    if (!divElement){
+        console.error("div id is missing");
+        throw new Error("div id is missing");
+    }
 
     const options = {
         borderColor,
@@ -12,10 +23,13 @@ async function generateChart({
         animationIndex,
         type
     }
-    await createChart(csvFilename, options);
+    await createChart(csvFilename,divElement, options);
 }
 
-function getAnimation(index) {
+function getAnimation({
+    index,
+    delay
+                      }) {
     const delayBetweenPoints = 10;
     const previousY = (ctx) => ctx.index === 0 ? ctx.chart.scales.y.getPixelForValue(100) : ctx.chart.getDatasetMeta(ctx.datasetIndex).data[ctx.index - 1].getProps(['y'], true).y;
     const options = [{
@@ -56,8 +70,8 @@ function getAnimation(index) {
         }
     }
     ];
-    if (index >= options.length) {
-        console.error(`Faulty animation index detected of ${index}, will continue with no animation`)
+    if (index >= options.length || index < 0) {
+        console.error(`Faulty animation index detected (index: ${index}), will continue with no animation`)
         index = 0;
     }
     return options[index] ?? options[0]
@@ -84,12 +98,12 @@ function parseCSV(data) {
     return { labels, values };
 }
 
-async function createChart(file, options) {
+async function createChart(file,divElement, options) {
     const data = await fetchCSV(file);
     const parsedData = parseCSV(data);
 
     const ctx = document.createElement('canvas');
-    document.getElementById('charts').appendChild(ctx);
+    divElement.appendChild(ctx);
 
     new Chart(ctx, {
         type: options.type ?? 'line',
@@ -104,7 +118,8 @@ async function createChart(file, options) {
             }]
         },
         options: {
-            animations: getAnimation(options.animationIndex),
+            animations: getAnimation({
+                index: options.animationIndex}),
             responsive: true,
             scales: {
                 x: {
@@ -124,20 +139,4 @@ async function createChart(file, options) {
     });
 }
 
-
-
-
-
-// generateChart({
-//     csvFilename: "/data/calliopemini-data-2025-03-17T12-05-48-003Z.csv",
-//     borderColor: "#FF0000",
-//     animationIndex: 1
-// })
-generateChart({
-    csvFilename: "/data/calliopemini-data-2025-03-17T12-29-16-698Z.csv",
-    animationIndex: 2
-})
-// generateChart({
-//     csvFilename: "/data/calliopemini-data-2025-03-19T09-49-18-231Z.csv"
-// })
 export default generateChart;
