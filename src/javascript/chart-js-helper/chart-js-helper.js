@@ -101,30 +101,42 @@ function getAnimation({
     if (animationName && index) {
         throw new Error("Can't take both name and index as identifiers for the animation.")
     }
-    if (index === 0 || animationName === "None") {
-        return {};
+    if ((!animationName && !index) || (index === 0 || animationName === "none")){
+        return {}
     }
-    if (index === 1 || animationName === "ease-in") {
-        return easeInAnimation;
-    }
-    if (index === 2 || animationName === "left-right-smooth") {
+
+    if (index === 1 || animationName === "progressive-line") {
         const delayBetweenPoints = delay ?? 10;
         return leftRightSmoothAnimation(delayBetweenPoints);
     }
-    // TODO: causes error rn
-    if (index === 3 || animationName === "drop-down"){
+    if (index === 2 || animationName === "drop-down"){
         return dropDownAnimation;
     }
+    if (index === 3 || animationName === "bounce") {
+        return bouncyAnimation;
+    }
+    // if (index === 4 || animationName === "loop"){
+    //     return loopAnimation;
+    // }
     throw new Error("Chosen Animation is not defined.");
 }
 
+const loopAnimation = {
+    radius: {
+        duration: 400,
+        easing: 'linear',
+        loop: (context) => context.active
+    }
+}
 
-const easeInAnimation = {
-    tension: 1000,
-    easing: 'linear',
-    from: 1,
-    to: 0,
-    loop: true
+const bouncyAnimation = {
+    tension: {
+        duration: 750,
+        easing: 'easeInBounce',
+        from: 0,
+        to: 3,
+        loop: true
+    }
 }
 
 const dropDownAnimation = {

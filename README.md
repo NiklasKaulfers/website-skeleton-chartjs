@@ -41,9 +41,9 @@ type:
 animationIndex | animationName:
 <ul>
     <li>0 | "none": keine Animation</li>
-    <li>1 | "ease-in": einfache von unten nach oben animation</li>
-    <li>2 | "left-right-smooth": animation von links nach rechts</li>
-    <li>3 | "drop-down": animation welche den Graphen von oben "hineinfallen" lässt</li>
+    <li>1 | "progressive-line": animation von links nach rechts</li>
+    <li>2 | "drop-down": animation welche den Graphen von oben "hineinfallen" lässt</li>
+    <li>3 | "bounce": Linie springt umher</li>
 </ul>
 <br>
 Beispiel:
