@@ -47,6 +47,7 @@ animationIndex:
 </ul>
 <br>
 Beispiel:
+
 ```javascript
     await generateChart({
     csvFilename: "/data/calliopemini-data-2025-03-17T12-29-16-698Z.csv",
