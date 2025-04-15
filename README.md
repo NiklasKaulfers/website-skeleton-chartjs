@@ -38,7 +38,7 @@ type:
     <li>und mehr</li>
 </ul>
 <br>
-animationIndex:
+animationIndex | animationName:
 <ul>
     <li>0 | "none": keine Animation</li>
     <li>1 | "ease-in": einfache von unten nach oben animation</li>
