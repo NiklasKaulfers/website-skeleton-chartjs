@@ -9,25 +9,10 @@
     margin: auto auto;
 }
 
-b{
-    color: blue;
-}
-
-p{
-    color: dodgerblue;
-}
-h1{
-    color: blue;
-}
-h2{
-    color: blue;
-}
-h3{
-    color: blue;
-}
 
 #picture-from-space-div {
     float: right;
+    text-align: center;
 }
 
 img {

@@ -25,12 +25,13 @@ type:
     <li>bar</li>
     <li>list</li>
     <li>bubble</li>
+    <li>doughnut</li>
     <li>und mehr</li>
 </ul>
 <br>
 animationIndex:
 <ul>
-    <li>0: keine Animation</li>
-    <li>1: einfache von unten nach oben animation</li>
-    <li>2: animation von links nach rechts</li>
+    <li>0 | "none": keine Animation</li>
+    <li>1 | "ease-in": einfache von unten nach oben animation</li>
+    <li>2 | "left-right-smooth": animation von links nach rechts</li>
 </ul>
