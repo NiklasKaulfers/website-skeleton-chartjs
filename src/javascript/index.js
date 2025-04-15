@@ -15,7 +15,7 @@ async function loadCharts() {
         borderColor: "rgb(0,100,255)",
         backgroundColor: "rgba(0,100,255,0.2)",
         title: "Messungen vom 17.03.2025",
-        animationName: "left-right-smooth"
+        animationIndex: 2
     })
 // generateChart({
 //     csvFilename: "/data/calliopemini-data-2025-03-19T09-49-18-231Z.csv"

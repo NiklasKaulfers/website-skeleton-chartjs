@@ -33,76 +33,6 @@ async function generateChart({
     await createChart(csvFilename, divElement, options);
 }
 
-const easeInAnimation = {
-    tension: 1000,
-    easing: 'linear',
-    from: 1,
-    to: 0,
-    loop: true
-}
-
-const leftRightSmoothAnimation = (delayBetweenPoints) => {
-    const previousY = (ctx) => ctx.index === 0 ? ctx.chart.scales.y.getPixelForValue(100) : ctx.chart.getDatasetMeta(ctx.datasetIndex).data[ctx.index - 1].getProps(['y'], true).y;
-    return {
-        x: {
-            type: 'number',
-            easing:
-                'linear',
-            duration:
-            delayBetweenPoints,
-            from:
-            NaN, // the point is initially skipped
-            delay(ctx) {
-                if (ctx.type !== 'data' || ctx.xStarted) {
-                    return 0;
-                }
-                ctx.xStarted = true;
-                return ctx.index * delayBetweenPoints;
-            }
-        }
-        ,
-        y: {
-            type: 'number',
-            easing:
-                'linear',
-            duration:
-            delayBetweenPoints,
-            from:
-            previousY,
-            delay(ctx) {
-                if (ctx.type !== 'data' || ctx.yStarted) {
-                    return 0;
-                }
-                ctx.yStarted = true;
-                return ctx.index * delayBetweenPoints;
-            }
-        }
-    }
-}
-
-
-function getAnimation({
-                          index,
-                          animationName,
-                          delay
-                      }) {
-    if (animationName && index) {
-        throw new Error("Can't take both name and index as identifiers for the animation.")
-    }
-    if (index === 0 || animationName === "None") {
-        return {};
-    }
-    if (index === 1 || animationName === "ease-in") {
-        return easeInAnimation;
-    }
-    if (index === 2 || animationName === "left-right-smooth") {
-        const delayBetweenPoints = delay ?? 10;
-        return leftRightSmoothAnimation(delayBetweenPoints);
-    }
-    throw new Error("Chosen Animation is not defined.");
-}
-
-
 async function fetchCSV(file) {
     const response = await fetch(file);
     return await response.text();
@@ -162,5 +92,93 @@ async function createChart(file, divElement, options) {
         }
     });
 }
+
+function getAnimation({
+                          index,
+                          animationName,
+                          delay
+                      }) {
+    if (animationName && index) {
+        throw new Error("Can't take both name and index as identifiers for the animation.")
+    }
+    if (index === 0 || animationName === "None") {
+        return {};
+    }
+    if (index === 1 || animationName === "ease-in") {
+        return easeInAnimation;
+    }
+    if (index === 2 || animationName === "left-right-smooth") {
+        const delayBetweenPoints = delay ?? 10;
+        return leftRightSmoothAnimation(delayBetweenPoints);
+    }
+    // TODO: causes error rn
+    if (index === 3 || animationName === "drop-down"){
+        return dropDownAnimation;
+    }
+    throw new Error("Chosen Animation is not defined.");
+}
+
+
+const easeInAnimation = {
+    tension: 1000,
+    easing: 'linear',
+    from: 1,
+    to: 0,
+    loop: true
+}
+
+const dropDownAnimation = {
+    y: {
+        easing: 'easeInOutElastic',
+        from: (ctx) => {
+            if (ctx.type === 'data') {
+                if (ctx.mode === 'default' && !ctx.dropped) {
+                    ctx.dropped = true;
+                    return 0;
+                }
+            }
+        }
+    }
+}
+
+const leftRightSmoothAnimation = (delayBetweenPoints) => {
+    const previousY = (ctx) => ctx.index === 0 ? ctx.chart.scales.y.getPixelForValue(100) : ctx.chart.getDatasetMeta(ctx.datasetIndex).data[ctx.index - 1].getProps(['y'], true).y;
+    return {
+        x: {
+            type: 'number',
+            easing:
+                'linear',
+            duration:
+            delayBetweenPoints,
+            from:
+            NaN, // the point is initially skipped
+            delay(ctx) {
+                if (ctx.type !== 'data' || ctx.xStarted) {
+                    return 0;
+                }
+                ctx.xStarted = true;
+                return ctx.index * delayBetweenPoints;
+            }
+        }
+        ,
+        y: {
+            type: 'number',
+            easing:
+                'linear',
+            duration:
+            delayBetweenPoints,
+            from:
+            previousY,
+            delay(ctx) {
+                if (ctx.type !== 'data' || ctx.yStarted) {
+                    return 0;
+                }
+                ctx.yStarted = true;
+                return ctx.index * delayBetweenPoints;
+            }
+        }
+    }
+}
+
 
 export default generateChart;
