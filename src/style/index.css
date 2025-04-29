@@ -1,103 +1,55 @@
-#more-charts {
-    width: 50%;
-    margin: auto auto 50px;
+body {
+    background-image: url('../../images/generated_starscreen.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-color: #01152c;
 }
 
-#charts {
-    width: 90%;
-    margin: auto auto;
+#main-content {
+    padding: 20px;
+    max-width: 800px;
+    margin: auto;
+    color: white;
 }
 
-#title{
+#title {
     text-align: center;
-}
-
-#main-content{
-    width: 100%;
+    font-size: 2.5em;
+    color: #00f;
+    text-shadow: 0 0 10px #00f, 0 0 20px #00f, 0 0 30px #00f;
 }
 
 #picture-from-space-div {
-    float: right;
     text-align: center;
+    margin: 20px 0;
 }
 
-#entries-div{
-    display: flex;
-    flex-direction: column;
-    width: 100%;
+#picture-from-space-div img {
+    max-width: 100%;
+    height: auto;
+    border: 5px solid #fff;
+    box-shadow: 0 0 20px #00f;
 }
 
-#entries-h2{
-    align-self: auto;
-    text-align: center;
+.h1.bold {
+    font-size: 1.5em;
+    font-weight: bold;
 }
 
-img {
-    width: 300px;
-    height: 300px;
+#general-infos {
+    margin: 20px 0;
 }
 
-body {
-    background: rgba(255, 255, 255, 0.78);
-    width: 90%;
-    margin: auto;
-    display: flex;
-}
-
-
-/* Style the buttons that are used to open and close the accordion panel */
-.accordion {
-    min-width: 100%;
-    background-color: #ffffff;
-    border: 2px solid #009dff;
-    color: black;
-    cursor: pointer;
-    padding: 15px 32px;
-    width: 100%;
-    border-radius: 8px;
-    text-align: center;
-    text-decoration: none;
-    font-size: 16px;
-    outline: none;
-    transition: 0.4s;
-    margin: 2px;
-}
-
-/* Add a background color to the button if it is clicked on (add the .active class with JS), and when you move the mouse over it (hover) */
-.active, .accordion:hover {
-    background-color: rgba(173, 239, 239, 0.75);
-}
-
-.accordion:hover {
-    box-shadow: 0 12px 16px 0 rgba(173, 239, 239, 0.75), 0 17px 50px 0 rgba(173, 239, 239, 0.30);
-}
-
-.panel {
-    padding: 0 18px;
-    background-color: white;
-    display: none;
-    overflow: hidden;
-}
-
-.accordion-content {
-    padding: 0 18px;
-    background-color: white;
-    overflow: hidden;
-    display: none;
-    border: 2px solid #009dff;
-    border-radius: 8px;
-}
-
-/* The flip box container - set the width and height to whatever you want. We have added the border property to demonstrate that the flip itself goes out of the box on hover (remove perspective if you don't want the 3D effect */
 .flip-box {
     background-color: transparent;
-    width: 500px;
+    width: 300px;
     height: 200px;
-    border: 1px solid #ffffff;
-    perspective: 1000px; /* Remove this if you don't want the 3D effect */
+    perspective: 1000px;
+    margin: auto;
 }
 
-/* This container is needed to position the front and back side */
 .flip-box-inner {
     position: relative;
     width: 100%;
@@ -107,31 +59,65 @@ body {
     transform-style: preserve-3d;
 }
 
-/* Do an horizontal flip when you move the mouse over the flip box container */
 .flip-box:hover .flip-box-inner {
     transform: rotateY(180deg);
 }
 
-/* Position the front and back side */
 .flip-box-front, .flip-box-back {
     position: absolute;
     width: 100%;
     height: 100%;
-    -webkit-backface-visibility: hidden; /* Safari */
     backface-visibility: hidden;
-}
-
-/* Style the front side */
-.flip-box-front {
-    border: 2px solid #009dff;
-    background-color: #ffffff;
-    color: black;
-}
-
-/* Style the back side */
-.flip-box-back {
-    border: 2px solid #009dff;
-    background-color: dodgerblue;
+    background-color: rgba(51, 51, 51, 0.5);
     color: white;
+    border: 2px solid #00f;
+    box-shadow: 0 0 20px #00f;
+    padding: 20px;
+}
+
+.flip-box-back {
     transform: rotateY(180deg);
+}
+
+.accordion {
+    background-color: rgba(51, 51, 51, 0.5);
+    color: white;
+    cursor: pointer;
+    padding: 10px;
+    width: 100%;
+    text-align: left;
+    border: none;
+    outline: none;
+    transition: background-color 0.4s;
+    margin: 5px 0;
+    box-shadow: 0 0 10px #00f;
+}
+
+.accordion:hover {
+    background-color: rgba(85, 85, 85, 0.5);
+}
+
+.accordion-content {
+    padding: 10px;
+    display: none;
+    background-color: rgba(34, 34, 34, 0.5);
+    box-shadow: 0 0 10px #00f;
+    color: white;
+}
+
+#conclusion {
+    margin: 20px 0;
+    color: white;
+}
+
+#conclusion h2 {
+    text-align: center;
+    font-size: 2em;
+    color: #00f;
+    text-shadow: 0 0 10px #00f, 0 0 20px #00f, 0 0 30px #00f;
+}
+
+#conclusion p {
+    text-align: center;
+    font-size: 1.2em;
 }
