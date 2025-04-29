@@ -121,3 +121,28 @@ body {
     text-align: center;
     font-size: 1.2em;
 }
+/* Style for the scrollbar */
+::-webkit-scrollbar {
+    width: 12px; /* Width of the scrollbar */
+}
+
+::-webkit-scrollbar-track {
+    background: rgba(51, 51, 51, 0.5); /* Background color of the scrollbar track */
+    box-shadow: inset 0 0 10px #00f; /* Glowing effect */
+}
+
+::-webkit-scrollbar-thumb {
+    background: #00f; /* Color of the scrollbar thumb */
+    border-radius: 6px; /* Rounded corners for the thumb */
+    box-shadow: 0 0 10px #00f; /* Glowing effect */
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #0055ff; /* Color of the scrollbar thumb on hover */
+}
+
+/* Fallback for Firefox */
+.scrollbar {
+    scrollbar-width: thin; /* Makes the scrollbar thinner */
+    scrollbar-color: #00f rgba(51, 51, 51, 0.5); /* Thumb and track colors */
+}
